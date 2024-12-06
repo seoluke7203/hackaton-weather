@@ -13,6 +13,25 @@ export default {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
       },
+      animation:{
+        'infinite-scroll': 'infinite-scroll 15s linear infinite',
+        'appear-in': 'fadeIn 0.5s ease-in forwards',
+        'appear-out': 'fadeOut 1s ease-out forwards',
+      },
+      keyframes: {
+        'infinite-scroll': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+        'fadeIn': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fadeOut': {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+      },
     },
   },
   daisyui: {

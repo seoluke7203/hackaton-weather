@@ -1,17 +1,33 @@
+
+
+import Hero from '@/app/components/main/hero'
+import Showcase from '@/app/components/main/showcase'
+import Temp from '@/app/components/main/temp'
+import Cart from '@/app/components/main/cart'
+
+
 export default function Home() {
-  const isSummer = false
+
+
+
+
 
   return (
-    <div
-      className={ `flex flex-col items-center justify-center h-screen ${
-        isSummer
-          ? 'bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500'
-          : 'bg-gradient-to-r from-blue-500 via-indigo-600 to-gray-800'
-      }` }
-    >
-      <h1 className="text-6xl font-bold text-center text-white drop-shadow-lg">
-        { isSummer ? 'text' : 'text' }
-      </h1>
+    <div className=" bg-gradient-to-r  from-yellow-400 via-orange-300 to-pink-300">
+      <div id="hero">
+        <Hero temp = { 20 } />
+      </div>
+      <div id="temp" className='sticky top-0 z-50'>
+        <Temp temp = { 20 } />
+      </div>
+      <div id="cart" className='fixed bottom-6 right-6 z-50 m-20'>
+        <Cart />
+      </div>
+      <div id= "content">
+        <Showcase />
+
+      </div>
+
     </div>
   )
 }
