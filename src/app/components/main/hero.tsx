@@ -9,9 +9,9 @@ export default async function Hero( { temp = 10 }: { temp: number } ) {
     <div
       className= "flex flex-col items-center justify-center h-screen"
     >
-      <div className="flex justify-center">
+      <div className="flex justify-center z-50">
         <div className="place-content-center">
-          <h1 className="text-9xl font-bold text-center text-white drop-shadow-lg border-8 border-double p-10 rounded-full mr-20">
+          <h1 className="text-9xl font-bold text-center text-white drop-shadow-lg border-8 border-double p-10 rounded-full mr-16 glass">
             { temp }°C
           </h1>
         </div>

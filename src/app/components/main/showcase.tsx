@@ -36,7 +36,7 @@ export default function Showcase() {
   }
 
   return (
-    <div className='flex flex-col justify-center items-center my-10'>
+    <div className='flex flex-col justify-center items-center my-10 z-50'>
       { /* Modal 창 */ }
       { isModalOpen && (
         <div className="absolute inset-0 z-50 flex justify-center items-center h-screen">
@@ -88,8 +88,48 @@ export default function Showcase() {
           </div>
         </div>
       ) }
-      <h1 className="text-3xl font-bold text-black mb-10 divider">상의</h1>
-      <h1 className='text-2xl font-bold text-black'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
+      <h1 className="text-3xl font-bold text-white mb-10 divider">상의</h1>
+      <h1 className='text-2xl font-bold text-white'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
+      <div className="inline-flex w-full flex-nowrap overflow-hidden">
+        <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
+          <li className='carousel-item'>
+            <Card name='상의asdas as d a s da sdasds ad sss ssssss ssss1' price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
+          </li>
+          <li className='carousel-item'>
+            <Card name='상의2' price={ 20000 } img='' id={ 2 } onAddToCart={ handleCardClick } />
+          </li>
+          <li className='carousel-item'>
+            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
+          </li>
+          <li className='carousel-item'>
+            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
+          </li>
+          <li className='carousel-item'>
+            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
+          </li>
+        </ul>
+        <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
+          <li className='carousel-item'>
+            <Card name='상의1' price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
+          </li>
+          <li className='carousel-item'>
+            <Card name='상의2' price={ 20000 } img='' id={ 2 } onAddToCart={ handleCardClick } />
+          </li>
+          <li className='carousel-item'>
+            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
+          </li>
+          <li className='carousel-item'>
+            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
+          </li>
+          <li className='carousel-item'>
+            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
+          </li>
+        </ul>
+      </div>
+
+
+      <h1 className="text-3xl font-bold text-white mb-10 divider">하의</h1>
+      <h1 className='text-2xl font-bold text-white'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
       <div className="inline-flex w-full flex-nowrap overflow-hidden">
         <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
           <li className='carousel-item'>
@@ -128,48 +168,8 @@ export default function Showcase() {
       </div>
 
 
-      <h1 className="text-3xl font-bold text-black mb-10 divider">하의</h1>
-      <h1 className='text-2xl font-bold text-black'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
-      <div className="inline-flex w-full flex-nowrap overflow-hidden">
-        <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
-          <li className='carousel-item'>
-            <Card name='상의1' price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의2' price={ 20000 } img='' id={ 2 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-        </ul>
-        <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
-          <li className='carousel-item'>
-            <Card name='상의1' price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의2' price={ 20000 } img='' id={ 2 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-        </ul>
-      </div>
-
-
-      <h1 className="text-3xl font-bold text-black mb-10 divider">아우터</h1>
-      <h1 className='text-2xl font-bold text-black'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
+      <h1 className="text-3xl font-bold text-white mb-10 divider">아우터</h1>
+      <h1 className='text-2xl font-bold text-white'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
       <div className="inline-flex w-full flex-nowrap overflow-hidden">
         <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
           <li className='carousel-item'>

@@ -14,7 +14,7 @@ export default {
         foreground: 'var(--foreground)',
       },
       animation:{
-        'infinite-scroll': 'infinite-scroll 45s linear infinite',
+        'infinite-scroll': 'infinite-scroll 450s linear infinite',
         'appear-in': 'fadeIn 0.5s ease-in forwards',
         'appear-out': 'fadeOut 1s ease-out forwards',
       },
