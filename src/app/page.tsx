@@ -39,16 +39,30 @@ export default async function Home() {
   }
 
   let type = 0
+  let keyword = [ '' ]
+  let keyword2 = [ '' ]
+  let keyword3 = [ '날이 덥습니다! 겉옷을 안챙겨도 괜찮습니다' ]
 
   // 여기에 옷추의 추천 키워드 추가 가능
   if (temperature >= 25) {
     type = 1
+    keyword = [ '반팔', '민소매', '린넨옷' ]
+    keyword2 = [ '반바지', '얇은 바지' ]
   } else if (temperature >= 18) {
     type = 2
+    keyword = [ '얇은 셔츠', '긴팔', '니트', '후드' ]
+    keyword2 = [ '슬랙스', '면바지', '청바지' ]
   } else if (temperature >= 9) {
     type = 3
+    keyword = [ '맨투맨', '니트' ]
+    keyword2 = [ '긴바지', '청바지' ]
+    keyword3 = [ '가디건', '점퍼', '야상' ]
+
   } else if (temperature <= 8) {
     type = 4
+    keyword = [ '히트택', '기모 맨투맨' ]
+    keyword2 = [ '기모 바지' ]
+    keyword3 = [ '가죽자켓', '코트', '롱패딩', '울코트' ]
   } else {
     type
   }
@@ -66,7 +80,7 @@ export default async function Home() {
         <Cart />
       </div>
       <div id= "content" className='pb-10'>
-        <Showcase type={ type } />
+        <Showcase type={ type } keyword={ keyword } keyword2 = { keyword2 } keyword3 = { keyword3 } />
       </div>
     </div>
   )

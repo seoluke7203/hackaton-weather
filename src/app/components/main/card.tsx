@@ -6,10 +6,13 @@ interface CardProps {
   price: number
   img: string
   id: number
-  onAddToCart: (name: string, price: number) => void
+  onAddToCart: (id:number, name: string, price: number) => void
 }
 
 export default function Card({ name, price, img, id, onAddToCart }: CardProps) {
+
+
+
   return (
     <div>
       <div className="cursor-pointer card bg-white max-w-[25vw] max-h-[60vh] shadow-2xl text-black mb-32 rounded-xl p-2">
@@ -40,7 +43,7 @@ export default function Card({ name, price, img, id, onAddToCart }: CardProps) {
         <div className="card-footer">
           <div className="flex justify-between items-center">
             <button
-              onClick={ () => onAddToCart(name, price) }
+              onClick={ () => onAddToCart(id, name, price) }
               className="btn btn-info text-white w-full mb-5"
             >
               장바구니에 추가하기

@@ -4,9 +4,10 @@ import Card from './card'
 import { useState, useEffect } from 'react'
 import { CiCircleCheck } from 'react-icons/ci'
 
-export default function Showcase( { type }: { type: number } ) {
+// eslint-disable-next-line max-len
+export default function Showcase( { type, keyword, keyword2, keyword3 }: { type: number, keyword: string[], keyword2: string[], keyword3: string[] } ) {
   const [ isModalOpen, setIsModalOpen ] = useState(false)
-  const [ modalData, setModalData ] = useState({ name: '', price: 0 })
+  const [ modalData, setModalData ] = useState({ name: '', price: 0, id: 0 })
   const [ showToast, setShowToast ] = useState(false)
   const [ isDisappearing, setIsDisappearing ] = useState(false)
   const [ data, setData ] = useState<any[]>([])
@@ -28,27 +29,53 @@ export default function Showcase( { type }: { type: number } ) {
     setIsModalOpen(!isModalOpen)
   }
 
-  const handleCardClick = (name: string, price: number) => {
-    setModalData({ name, price })
+  const handleCardClick = (id: number, name: string, price: number) => {
+    setModalData({ id, name, price })
     toggleModal()
   }
 
-  const addToCart = () => {
+  const addToCart = async () => {
+    const selectedSize = (document.querySelector('input[name="radio-10"]:checked') as HTMLInputElement)?.value
+
+    if (!selectedSize) {
+      alert('Please select a size before adding to the cart.')
+      return
+    }
+
     toggleModal()
     setShowToast(true)
     setIsDisappearing(false)
 
+    // Backend API request
+    try {
+      const response = await fetch('http://localhost:8080/api/cart/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: modalData.id,
+          size: selectedSize,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to add to cart')
+      }
+
+      console.log('Item added to cart successfully')
+    } catch (error) {
+      console.error('Error adding to cart:', error)
+    }
+
+    // Toast animation logic
     setTimeout(() => {
       setIsDisappearing(true)
       setTimeout(() => {
         setShowToast(false)
       }, 1000)
     }, 2000)
-
-    // 이곳에 장바구니에 추가하는 로직을 넣기
-    console.log('added to cart')
   }
-
 
   function cleanName(name: string) {
     let cleanedName = name.replace(/<\/?[^>]+(>|$)/g, '')
@@ -67,25 +94,25 @@ export default function Showcase( { type }: { type: number } ) {
             <div className="form-control">
               <label className="label cursor-pointer">
                 <span className="label-text">S (90)</span>
-                <input type="radio" name="radio-10" className="radio checked:bg-red-500" defaultChecked />
+                <input type="radio" name="radio-10" value="S" className="radio checked:bg-red-500" defaultChecked />
               </label>
             </div>
             <div className="form-control">
               <label className="label cursor-pointer">
                 <span className="label-text">M (95)</span>
-                <input type="radio" name="radio-10" className="radio checked:bg-blue-500" />
+                <input type="radio" name="radio-10" value="M" className="radio checked:bg-blue-500" />
               </label>
             </div>
             <div className="form-control">
               <label className="label cursor-pointer">
                 <span className="label-text">L (100)</span>
-                <input type="radio" name="radio-10" className="radio checked:bg-green-500" />
+                <input type="radio" name="radio-10" value="L" className="radio checked:bg-green-500" />
               </label>
             </div>
             <div className="form-control">
               <label className="label cursor-pointer">
                 <span className="label-text">XL (105)</span>
-                <input type="radio" name="radio-10" className="radio checked:bg-yellow-500" />
+                <input type="radio" name="radio-10" value="XL" className="radio checked:bg-yellow-500" />
               </label>
             </div>
             <div className='flex gap-x-2 mt-3'>
@@ -109,7 +136,7 @@ export default function Showcase( { type }: { type: number } ) {
         </div>
       ) }
       <h1 className="text-3xl font-bold text-white mb-10 divider">상의</h1>
-      <h1 className='text-2xl font-bold text-white'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
+      <h1 className='text-2xl font-bold text-white'>옷차의 추천: { keyword.join(', ') }</h1>
       <div className="inline-flex w-full flex-nowrap overflow-hidden">
         <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
           { data
@@ -130,7 +157,7 @@ export default function Showcase( { type }: { type: number } ) {
 
 
       <h1 className="text-3xl font-bold text-white mb-10 divider">하의</h1>
-      <h1 className='text-2xl font-bold text-white'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
+      <h1 className='text-2xl font-bold text-white'>옷차의 추천: { keyword2.join(', ') }</h1>
       <div className="inline-flex w-full flex-nowrap overflow-hidden">
         <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
           { data
@@ -152,7 +179,7 @@ export default function Showcase( { type }: { type: number } ) {
 
 
       <h1 className="text-3xl font-bold text-white mb-10 divider">아우터</h1>
-      <h1 className='text-2xl font-bold text-white'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
+      <h1 className='text-2xl font-bold text-white'>옷차의 추천: { keyword3.join(', ') }</h1>
       <div className="inline-flex w-full flex-nowrap overflow-hidden">
         <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
           { data
@@ -168,10 +195,8 @@ export default function Showcase( { type }: { type: number } ) {
                 />
               </li>
             )) }
-
         </ul>
       </div>
-
     </div>
   )
 }
