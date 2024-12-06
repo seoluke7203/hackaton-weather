@@ -1,16 +1,28 @@
 'use client'
 
 import Card from './card'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CiCircleCheck } from 'react-icons/ci'
 
-
-export default function Showcase() {
+export default function Showcase( { type }: { type: string } ) {
   const [ isModalOpen, setIsModalOpen ] = useState(false)
   const [ modalData, setModalData ] = useState({ name: '', price: 0 })
   const [ showToast, setShowToast ] = useState(false)
   const [ isDisappearing, setIsDisappearing ] = useState(false)
+  const [ data, setData ] = useState<any[]>([])
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/main/${type}`)
+        const result = await response.json()
+        setData(result.data)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
+    fetchData()
+  }, [ type ])
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen)
@@ -32,12 +44,20 @@ export default function Showcase() {
         setShowToast(false)
       }, 1000)
     }, 2000)
+
+    // 이곳에 장바구니에 추가하는 로직을 넣기
     console.log('added to cart')
+  }
+
+
+  function cleanName(name: string) {
+    let cleanedName = name.replace(/<\/?[^>]+(>|$)/g, '')
+    cleanedName = cleanedName.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣ]/g, '')
+    return cleanedName
   }
 
   return (
     <div className='flex flex-col justify-center items-center my-10 z-50'>
-      { /* Modal 창 */ }
       { isModalOpen && (
         <div className="absolute inset-0 z-50 flex justify-center items-center h-screen">
           <div className="bg-white fixed p-10 rounded-xl border-8 border-purple-200">
@@ -92,8 +112,16 @@ export default function Showcase() {
       <h1 className='text-2xl font-bold text-white'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
       <div className="inline-flex w-full flex-nowrap overflow-hidden">
         <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
-          <li className='carousel-item'>
-            <Card name='상의asdas as d a s da sdasds ad sss ssssss ssss1' price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
+
+          { data.map((item) => (
+            <li className='carousel-item' key={ item.id }>
+
+              <Card name={ cleanName(item.name) } price={ item.price } img='' id={ item.id } onAddToCart={ handleCardClick } />
+            </li>
+          )) }
+
+          { /* <li className='carousel-item'>
+            <Card name={ 'sdsad' } price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
           </li>
           <li className='carousel-item'>
             <Card name='상의2' price={ 20000 } img='' id={ 2 } onAddToCart={ handleCardClick } />
@@ -106,7 +134,7 @@ export default function Showcase() {
           </li>
           <li className='carousel-item'>
             <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
+          </li> */ }
         </ul>
         <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
           <li className='carousel-item'>

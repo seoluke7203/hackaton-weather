@@ -1,5 +1,3 @@
-
-
 import Hero from '@/app/components/main/hero'
 import Showcase from '@/app/components/main/showcase'
 import Temp from '@/app/components/main/temp'
@@ -11,45 +9,49 @@ export default async function Home() {
 
   let response = await fetch('http://localhost:8080/api/weather')
   let data = await response.json()
-  console.log(data.data)
+  console.log('Hello', data.data.temperature)
 
-  const temperature = data.data
+  const temperature = data.data.temperature
   const gradientClass = getGradientForTemperature(temperature)
 
   console.log(gradientClass)
 
 
   // retrieve weather data
-  const weather = 2
+  const weather = data.data.ptyCode
   let fallingSpeed = 15000
   let width = 1
   let height = 1
 
-  // 1: 비, 2: 눈
+  // 0: 맑음 1: 비, 3: 눈
   if (weather == 1) {
     fallingSpeed = 1500
     width = 0.1
     height = 50
   } else if (weather == 2) {
     fallingSpeed = 15000
-    width = 10
-    height = 10
+    width = 15
+    height = 15
+  } else {
+    fallingSpeed = 0
+    width = 0
+    height = 0
   }
 
   return (
     <div className={ `${gradientClass} h-full` }>
       <SnowEffect fallingSpeed={ fallingSpeed } width={ width } height= { height }/>
       <div id="hero">
-        <Hero temp = { data.data } />
+        <Hero temp = { data.data.temperature } />
       </div>
       <div id="temp" className='sticky top-0 z-50'>
-        <Temp temp = { data.data } />
+        <Temp temp = { data.data.temperature } />
       </div>
       <div id="cart" className='fixed bottom-6 right-6 z-50 m-20'>
         <Cart />
       </div>
       <div id= "content" className='pb-10'>
-        <Showcase />
+        <Showcase type='3' />
       </div>
     </div>
   )
