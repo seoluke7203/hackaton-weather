@@ -4,7 +4,7 @@ import Card from './card'
 import { useState, useEffect } from 'react'
 import { CiCircleCheck } from 'react-icons/ci'
 
-export default function Showcase( { type }: { type: string } ) {
+export default function Showcase( { type }: { type: number } ) {
   const [ isModalOpen, setIsModalOpen ] = useState(false)
   const [ modalData, setModalData ] = useState({ name: '', price: 0 })
   const [ showToast, setShowToast ] = useState(false)
@@ -52,7 +52,7 @@ export default function Showcase( { type }: { type: string } ) {
 
   function cleanName(name: string) {
     let cleanedName = name.replace(/<\/?[^>]+(>|$)/g, '')
-    cleanedName = cleanedName.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣ]/g, '')
+    cleanedName = cleanedName.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣ\s]/g, '')
     return cleanedName
   }
 
@@ -112,46 +112,19 @@ export default function Showcase( { type }: { type: string } ) {
       <h1 className='text-2xl font-bold text-white'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
       <div className="inline-flex w-full flex-nowrap overflow-hidden">
         <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
-
-          { data.map((item) => (
-            <li className='carousel-item' key={ item.id }>
-
-              <Card name={ cleanName(item.name) } price={ item.price } img='' id={ item.id } onAddToCart={ handleCardClick } />
-            </li>
-          )) }
-
-          { /* <li className='carousel-item'>
-            <Card name={ 'sdsad' } price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의2' price={ 20000 } img='' id={ 2 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li> */ }
-        </ul>
-        <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
-          <li className='carousel-item'>
-            <Card name='상의1' price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의2' price={ 20000 } img='' id={ 2 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
+          { data
+            .filter((item) => item.recommendCode?.includes('A'))
+            .map((item) => (
+              <li className="carousel-item" key={ item.id }>
+                <Card
+                  name={ cleanName(item.name) }
+                  price={ item.price }
+                  img={ item.img }
+                  id={ item.id }
+                  onAddToCart={ handleCardClick }
+                />
+              </li>
+            )) }
         </ul>
       </div>
 
@@ -160,38 +133,20 @@ export default function Showcase( { type }: { type: string } ) {
       <h1 className='text-2xl font-bold text-white'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
       <div className="inline-flex w-full flex-nowrap overflow-hidden">
         <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
-          <li className='carousel-item'>
-            <Card name='상의1' price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의2' price={ 20000 } img='' id={ 2 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-        </ul>
-        <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
-          <li className='carousel-item'>
-            <Card name='상의1' price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의2' price={ 20000 } img='' id={ 2 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
+          { data
+            .filter((item) => item.recommendCode?.includes('B'))
+            .map((item) => (
+              <li className="carousel-item" key={ item.id }>
+                <Card
+                  name={ cleanName(item.name) }
+                  price={ item.price }
+                  img={ item.img }
+                  id={ item.id }
+                  onAddToCart={ handleCardClick }
+                />
+              </li>
+            )) }
+
         </ul>
       </div>
 
@@ -200,38 +155,20 @@ export default function Showcase( { type }: { type: string } ) {
       <h1 className='text-2xl font-bold text-white'>옷차의 추천: { [ '셔츠', '맨투맨' ].join(', ') }</h1>
       <div className="inline-flex w-full flex-nowrap overflow-hidden">
         <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
-          <li className='carousel-item'>
-            <Card name='상의1' price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의2' price={ 20000 } img='' id={ 2 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-        </ul>
-        <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8 m-4">
-          <li className='carousel-item'>
-            <Card name='상의1' price={ 10000 } img='' id={ 1 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의2' price={ 20000 } img='' id={ 2 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
-          <li className='carousel-item'>
-            <Card name='상의3' price={ 30000 } img='' id={ 3 } onAddToCart={ handleCardClick } />
-          </li>
+          { data
+            .filter((item) => item.recommendCode?.includes('C'))
+            .map((item) => (
+              <li className="carousel-item" key={ item.id }>
+                <Card
+                  name={ cleanName(item.name) }
+                  price={ item.price }
+                  img={ item.img }
+                  id={ item.id }
+                  onAddToCart={ handleCardClick }
+                />
+              </li>
+            )) }
+
         </ul>
       </div>
 

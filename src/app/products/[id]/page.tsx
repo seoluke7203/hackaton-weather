@@ -1,3 +1,4 @@
+
 import ItemLayout from '@/app/components/detail/itemLayout'
 
 export default async function Page(props: { params: Promise<{ id: string}>}) {

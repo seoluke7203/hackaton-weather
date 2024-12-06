@@ -12,14 +12,16 @@ interface CardProps {
 export default function Card({ name, price, img, id, onAddToCart }: CardProps) {
   return (
     <div>
-      <div className="cursor-pointer card bg-white w-[20vw] shadow-2xl text-black mb-32 rounded-xl p-2">
+      <div className="cursor-pointer card bg-white max-w-[25vw] max-h-[60vh] shadow-2xl text-black mb-32 rounded-xl p-2">
         <Link href={ `/products/${id}` }>
           <div className="flex justify-center mt-5">
-            <figure className="w-[110px] h-[110px] mt-10 object-contain">
+            <figure className="w-[200px] h-[200px] mt-10 object-contain">
               <Image
-                src={ '' }
-                width={ 200 }
-                height={ 200 }
+                src={ img }
+                width={ 300 }
+                height={ 300 }
+                placeholder='blur'
+                blurDataURL="data:image/jpeg;base64"
                 alt="item"
                 className="object-contain w-full h-full rounded-lg"
               />
