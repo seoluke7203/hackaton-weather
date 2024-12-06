@@ -1,14 +1,13 @@
-export default function Hero( { temp = 10 }: { temp: number } ) {
-  // const isSummer = true
-  const isSummer = false
+export default async function Hero( { temp = 10 }: { temp: number } ) {
+
+
+
+  const isSummer = true
+  // const isSummer = false
 
   return (
     <div
-      className={ `flex flex-col items-center justify-center h-screen ${
-        isSummer
-          ? 'bg-gradient-to-r from-yellow-400 via-orange-300 to-pink-300'
-          : 'bg-gradient-to-r from-blue-500 via-indigo-600 to-gray-800'
-      }` }
+      className= "flex flex-col items-center justify-center h-screen"
     >
       <div className="flex justify-center">
         <div className="place-content-center">

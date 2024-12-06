@@ -15,7 +15,7 @@ interface CardProps {
 export default function Card({ name, price, img, id, onAddToCart }: CardProps) {
   return (
     <div>
-      <div className="cursor-pointer card bg-white w-60 shadow-2xl text-black mb-32 rounded-xl p-1">
+      <div className="cursor-pointer card bg-white w-[20vw] shadow-2xl text-black mb-32 rounded-xl p-1">
         <Link href={ `/products/${id}` }>
           <div className="flex justify-center mt-5">
             <figure className="w-[110px] h-[110px] mt-10 object-contain">
