@@ -7,10 +7,22 @@ import { useForm } from 'react-hook-form'
 import { FaPlus } from 'react-icons/fa'
 import { FaMinus } from 'react-icons/fa6'
 import QRCode from '@/app/components/payment/qrCode'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  img: string;
+  size: string;
+  count: number;
+}
+
 
 export default function Page() {
   const [ userPassword, setUserPassword ] = useState('')
+  const [ cartItems, setCartItems ] = useState<CartItem[]>([])
+  const [ isLoading, setIsLoading ] = useState(false)
 
   // 나중에 난수화 하기
   const password = '1234'
@@ -25,6 +37,46 @@ export default function Page() {
     console.log('Form Data:', data)
   }
 
+  function cleanName(name: string) {
+    let cleanedName = name.replace(/<\/?[^>]+(>|$)/g, '')
+    cleanedName = cleanedName.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣ\s]/g, '')
+    return cleanedName
+  }
+
+  function getTotalPrice() {
+    return cartItems.reduce((total, item) => total + (item.price * item.count), 0);
+  }
+
+  let totalPrice = 0
+
+  console.log('cartItems:', totalPrice)
+
+
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      setIsLoading(true)
+      try {
+        const response = await fetch('http://localhost:8080/api/cart/find')
+        if (!response.ok) {
+          throw new Error('Failed to fetch cart items')
+        }
+        const data: CartItem[] = await response.json()
+        setCartItems(data)
+      } catch (error) {
+        console.error('Error fetching cart items:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchCartItems()
+  }, [])
+
+
+
+
+
   return (
     <div className="bg-white text-black">
       <div>
@@ -33,19 +85,18 @@ export default function Page() {
         </div>
         <div className="text-3xl text-center font-bold text-pink-700 mb-6">결제 하기</div>
         <div className="flex flex-col gap-y-2 px-20">
-          <ItemList />
-          <ItemList />
-          <ItemList />
-          <ItemList />
-          <ItemList />
+          { cartItems.map((item) => (
+            console.log('item:', item.count),
+            <ItemList count={item.count} key={ item.id } name={ cleanName(item.name) } price={ item.price } img={ item.img } size={ item.size } />
+          )) }
         </div>
       </div>
-      <div className="flex mt-10 py-2 place-content-center  ">
+      <div className="flex mt-10 py-2 place-content-center">
         <div className="card rounded-box grid h-32 place-items-center w-1/3 bg-gray-200">
           <div className='flex gap-x-4 text-center'>
             <div className='flex flex-col'>
               <p className='text-xs'>선택 상품 금액</p>
-              <p className=' font-semibold'>{ 100 }원</p>
+              <p className=' font-semibold'>{ getTotalPrice() } 원</p>
             </div>
             <FaPlus className='mt-3'/>
             <div className='flex flex-col'>
@@ -64,7 +115,7 @@ export default function Page() {
           <div className='flex gap-x-3 text-center'>
             <div className='flex flex-col'>
               <p className='text-xs mb-2'>총 결제 금액</p>
-              <p className=' font-semibold text-3xl'>{ 100 }원</p>
+              <p className=' font-semibold text-3xl'>{ getTotalPrice() }원</p>
             </div>
           </div>
         </div>

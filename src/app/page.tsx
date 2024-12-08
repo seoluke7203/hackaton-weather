@@ -11,14 +11,20 @@ export default async function Home() {
   let data = await response.json()
   console.log('Hello', data.data.temperature)
 
+  // 여기 바꾸기
   const temperature = data.data.temperature
+  // const temperature = 10
+  // const temperature = 20
+  // const temperature = 30
   const gradientClass = getGradientForTemperature(temperature)
 
   console.log(gradientClass)
 
 
   // retrieve weather data
-  const weather = data.data.ptyCode
+  // const weather = data.data.ptyCode
+  // const weather = 1 // 비
+  const weather = 2 // 눈
   let fallingSpeed = 15000
   let width = 1
   let height = 1
@@ -71,10 +77,10 @@ export default async function Home() {
     <div className={ `${gradientClass} h-full` }>
       <SnowEffect fallingSpeed={ fallingSpeed } width={ width } height= { height }/>
       <div id="hero">
-        <Hero temp = { data.data.temperature } />
+        <Hero temp = { temperature } />
       </div>
       <div id="temp" className='sticky top-0 z-50'>
-        <Temp temp = { data.data.temperature } />
+        <Temp temp = { temperature } />
       </div>
       <div id="cart" className='fixed bottom-6 right-6 z-50 m-20'>
         <Cart />

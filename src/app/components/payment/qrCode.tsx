@@ -14,8 +14,8 @@ export default function QRCode({ password }: {password: string}) {
           scale: 4,
           width: 300,
           color: {
-            dark: '#010599FF',
-            light: '#33FF33',
+            dark:'#000000', 
+            light: '#FFFFFF',
           },
         } }
       />
